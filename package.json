@@ -1,0 +1,40 @@
+{
+  "name": "eusi-node",
+  "version": "1.0.0",
+  "description": "SDK for accessing EUSI delivery API using NodeJS",
+  "main": "dist/eusi-node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sample": "nodemon samples/sample.js --exec babel-node --presets env",
+    "build": "rollup --config"
+  },
+  "keywords": [
+    "eusi",
+    "node",
+    "sdk",
+    "EUSI",
+    "delivery",
+    "API"
+  ],
+  "author": "JS Guru International",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "nodemon": "^1.14.12",
+    "rollup": "^0.55.3",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-pluginutils": "^2.0.1"
+  },
+  "dependencies": {
+    "eusi-core": "git+https://git@github.com/jsguru-io/eusi-sdk-core-js.git",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  },
+  "files": [
+    "dist",
+    "lib"
+  ]
+}
