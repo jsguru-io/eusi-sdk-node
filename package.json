@@ -1,5 +1,5 @@
 {
-  "name": "eusi-node",
+  "name": "eusi-sdk-node",
   "version": "1.0.0",
   "description": "SDK for accessing EUSI delivery API using NodeJS",
   "main": "dist/eusi-node.js",
