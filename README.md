@@ -1,17 +1,18 @@
 
 
 # eusi-sdk-node
-The JS library acting as a wrapper around **EUSI** delivery API for NodeJS environment.
+The JS library which abstracts low level communication with **EUSI** delivery API is meant to be within NodeJS environment.
 
 > EUSI is API-first CMS that is user-friendly, beautifully
 designed and easy to use.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
+## Installation
 
 - [Installation](#installation)
 - [Simple usage](#simple-usage)
+- [Configuration](#configuration)
 - [Authorization/Authentication](#authorizationauthentication)
   - [login](#login)
   - [register](#register)
@@ -39,20 +40,21 @@ designed and easy to use.
 - [Fetching taxonomy](#fetching-taxonomy)
   - [getTaxonomy](#gettaxonomy)
 - [Wrapping up the access token](#wrapping-up-the-access-token)
+- [More examples](#more-examples)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 ## Installation
-``` sh
+```sh
 npm install --save eusi-sdk-node
 ```
 or
-``` sh
+```sh
 yarn add eusi-sdk-node
 ```
+
 ## Simple usage
 ``` js
-const eusiNode = require('eusi-sdk-node');
+    import eusiNode from 'eusi-sdk-node';
 
     // both bucketKey and bucketSecret should be obtained form inside our eusi app under the settings tab
     const eusi = eusiNode({
@@ -62,14 +64,14 @@ const eusiNode = require('eusi-sdk-node');
 
 	// obtaining an anonymous access token
 	// (in case you are not using our membership system or
-	// you want a guest access)
+	// you want guest access)
     eusi.getAccess()
 	    .then((response) => eusi.getById('44e8c09b-ed9e-4424-99e0-2de60adafa01', { token: response.token }))
         .then(console.log);
 ```
 
-## Configuratioon
-You can configure eusiNode factory with the fallowing parameters:
+## Configuration
+You can configure *eusiNode* factory with the following parameters:
 
  - **bucketKey** (mandatory) - represents unique identificator of the bucket you are accessing
  - **bucketSecret** (mandatory) - the secret token that you are given
@@ -77,23 +79,29 @@ You can configure eusiNode factory with the fallowing parameters:
 
 ## Authorization/Authentication
 We use two step authorization system.
-First you need to acquire bucket key **(aka bucket id)**  and the bucket secret. Both of these you can obtain through our app.
-Go to settings section. Click on the bucket keys tab where you will be able to create a new bucket key. Choose a name and select which parts should be turned on.
-Note that only parts of the API which are activated you will be able to use with that newly created key.
-Click save and you will be displayed with the bucket id (aka bucket key) and the bucket secret.
-Now pass both of that data to sdk function and you will receive a client object which still have to obtain a temporary access token.
+First you need to acquire the bucket key **(aka bucket id)**  and the bucket secret. Both of these you can obtain through our application.
+
+ 1. Go to the settings section.
+ 2. Click on the bucket keys tab where you will be able to create a new bucket key.
+ 3. Choose a name and select which parts should be turned on.
+ 4. Click save and you will be displayed with the bucket id (aka bucket key) and the bucket secret.
+
+Now pass both of that data to SDK factory function and you will receive a client object.
+
 ```js
    const eusi = eusiNode({
 	    bucketKey: '46e5945b-789d-4cc2-8a40-608612425226',
 	    bucketSecret: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJidWNrZXRfaWQiOiI0NmU1OTQ1Yi03ODlkLTRjYzItOGE0MC02MDg2MTI0MjUyMjYiLCJpZCI6IjU0MjBjYjA2LTRmMGYtNDMzMy1hODJhLTc5ZmFjMzU5YTU2ZSIsInRpbWVzdGFtcCI6MTUxNjYxMDU5NDc1Mn0.Li8Sb8v1CJnANDctUQumAQo90puBtNA3ywh4MmnxP-M'
     });
 ```
+***NOTE:  that only parts of the API which are activated you will be able to use with that newly created key.***
+
 Next step is acquiring an access token.
-There are few ways of doing it described below.
+There are a few ways of doing it as described below.
 
 ### login
 
-If the user is already registered.
+If the user is already registered
 
 ```js
 eusi.login({
@@ -149,7 +157,7 @@ eusi.getAccess().then(response => {
 .catch(error => console.log('Obtaining temporary access token failed');
 ```
 ### getUser
-Retrieve info of currently logged in user
+Retrieves info of the currently logged in user
 ```js
 eusi.getUser({ token }).then(user => console.log(user));
 ```
@@ -172,13 +180,13 @@ eusi.getById('44e8c09b-ed9e-4424-99e0-2de60adafa01', { token });
 eusi.get({
     type: 'blog'
 }, { token })
-    .then(result...
+    .then(console.log);
 ```
 or
 
 ``` js
 eusi.getByType('blog', { token })
-    .then(result...
+    .then(console.log);
 ```
 
 ### by content name
@@ -274,7 +282,7 @@ Currently we support these operators: **$like**, **$between**, **$in** , **$lg**
 **They all work the same as related SQL operators.**
 
 ### $like
-Matches substrings (works the same as SQL LIKE operator)
+Matches substrings
 ``` js
 eusi.getByField({
      'responsible-scientist': {
@@ -411,7 +419,7 @@ withTokenClient
 ```
 
 ## Wrapping up the access token
-Instead of passing token every time you request something you can wrap it up and receive an object with the identical API which will automatically pass the token for you any time you make a request.
+Instead of passing the access token every time you request something you can wrap it up and receive an object with the identical API which will automatically pass the token for you any time you make a request.
 ``` js
     const eusi = eusiNode({
 	    bucketKey: '46e5945b-789d-4cc2-8a40-608612425226',
@@ -434,4 +442,4 @@ Instead of passing token every time you request something you can wrap it up and
 **NOTE: Only API methods which require access token are exposed on *withTokenClient* object**.
 
 ## More examples
-For more examples please make sure you refer to our [samples](https://github.com/jsguru-io/eusi-sdk-node/blob/master/samples/sample.js).
+For more examples please make sure you refer to our [samples](https://github.com/jsguru-io/eusi-sdk-node/tree/master/samples).
