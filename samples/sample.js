@@ -6,7 +6,6 @@ const eusi = eusiNode({
     bucketSecret: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJidWNrZXRfaWQiOiI0NmU1OTQ1Yi03ODlkLTRjYzItOGE0MC02MDg2MTI0MjUyMjYiLCJpZCI6IjU0MjBjYjA2LTRmMGYtNDMzMy1hODJhLTc5ZmFjMzU5YTU2ZSIsInRpbWVzdGFtcCI6MTUxNjYxMDU5NDc1Mn0.Li8Sb8v1CJnANDctUQumAQo90puBtNA3ywh4MmnxP-M'
 });
 
-
 // for anonymous access
 
 eusi.getAccess().then((response) => {
@@ -26,7 +25,6 @@ eusi
         lastName: 'Doe'
     })
     .then(user => {
-        // saveUserToLocalStorage(user) - for FE implementations
         const eusiClient = eusi(user.token);
         console.log(user);
 
@@ -80,5 +78,5 @@ eusi.login('test@gmail.com', 'test').then(user => {
         }
     }).then(console.log);
 }).catch(() => {
-    alert('wrong user name or password');
+    console.error('wrong user name or password');
 });
