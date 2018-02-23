@@ -82,7 +82,7 @@ eusi.getByTaxonomyName('sport-news', { token }).then(...
 ### by taxonomy path
 ``` js
 eusi.get({
-    taxonommyPath: 'sport-news.tennis.ao` // you can find the full path of every taxonomy item under taxonomy tab inside eusi app
+    taxonommyPath: 'sport-news.tennis.ao' // you can find the full path of every taxonomy item under taxonomy tab inside eusi app
 }, { token }).then(...
 ```
 or
@@ -95,11 +95,11 @@ NOTE: currently we support searching only by textual fields
 ``` js
 eusi.get({
     field: {
-        'responsible-scientist': 'Nikola Tesla`,
+        'responsible-scientist': 'Nikola Tesla',
     }
 }, { token }).then(res => {
   console.log(res);
-  // prints out all the content which have field key `responsible-scientis` with the value `Nikola Tesla`
+  // prints out all the content which have field key 'responsible-scientis' with the value 'Nikola Tesla'
 });
 ```
 or
@@ -108,18 +108,18 @@ eusi.getByField({
   'responsible-scientist': 'Nikola Tesla'
 }), { token }).then(res => {
   console.log(res);
-  // prints out all the content which have field key `responsible-scientis` with the value `Nikola Tesla`
+  // prints out all the content which have field key 'responsible-scientis' with the value 'Nikola Tesla'
 });
 ```
 or you can search for a match by providing multiple field queries
 ``` js
 eusi.getByField({
      'responsible-scientist': 'Nikola Tesla',
-     'location': 'New York`
+     'location': 'New York'
 }, { token }).then(result => {
     console.log(result);
-    // prints out all the content which have field `responsible-scientist` with the value `Nikola Tesla` and
-    // which have at the same time `location` field with the value `New York`
+    // prints out all the content which have field 'responsible-scientist' with the value 'Nikola Tesla' and
+    // which have at the same time 'location' field with the value 'New York'
 });
 ```
 
@@ -127,6 +127,7 @@ eusi.getByField({
 Our API provides you with an easy and elegant interface to make more complex queries.
 Instead of passing simple string to every method from above, you can pass a query object.
 We support these operators: **$like**, **$between**, **$in** and by default for multiple query object props logical AND operator is used.
+They all work the same as related SQL operators.
 
 ### $like
 Matches substrings (works the same as SQL LIKE operator)
@@ -137,7 +138,7 @@ eusi.getByField({
      },
 }, { token }).then(result => {
     console.log(result);
-    // prints out all the content which have field `location` which value starts with 'New`
+    // prints out all the content which have field 'location' which value starts with 'New'
 });
 
 // You can combine queries with any number of quearible fields
@@ -148,9 +149,8 @@ eusi.get({
     taxonomyPath: {
         $like: 'news.%'
     },
-}).then(.../ fetches all the content which name starts with 'Today` and which has any taxnomy which is a descendant of taxonomy `news`
+}).then(.../ fetches all the content which name starts with 'Today' and which has any taxnomy which is a descendant of taxonomy 'news'
 ```
 NOTE: When using $like operator there is no case sensitivity
 
-### $between
-Matches interval
+The rest is in progress...
