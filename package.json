@@ -29,7 +29,7 @@
     "rollup-pluginutils": "^2.0.1"
   },
   "dependencies": {
-    "eusi-core": "git+https://git@github.com/jsguru-io/eusi-sdk-core-js.git",
+    "eusi-sdk-core": "git+https://github.com/jsguru-io/eusi-sdk-core-js.git",
     "request": "^2.83.0",
     "request-promise": "^4.2.2"
   },
