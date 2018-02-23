@@ -3,11 +3,7 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var requestPromise = _interopDefault(require('request-promise'));
-var eusiCore = _interopDefault(require('eusi-core'));
-
-var Config = {
-    BASE_URL: 'http://localhost:4301/api/v1'
-};
+var eusiCore = _interopDefault(require('eusi-sdk-core'));
 
 var get = function get(url, config) {
     return requestPromise({
@@ -36,10 +32,10 @@ var nodeHttpService = {
 
 var index = (function (_ref) {
     var bucketKey = _ref.bucketKey,
-        bucketSecret = _ref.bucketSecret;
-
+        bucketSecret = _ref.bucketSecret,
+        deliveryApi = _ref.deliveryApi;
     return eusiCore({
-        Config: Config,
+        deliveryApi: deliveryApi,
         HttpService: nodeHttpService
     })({
         bucketKey: bucketKey,
