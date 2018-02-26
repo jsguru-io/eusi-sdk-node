@@ -1,6 +1,10 @@
 {
   "name": "eusi-sdk-node",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsguru-io/eusi-sdk-node"
+  },
   "description": "SDK for accessing EUSI delivery API using NodeJS",
   "main": "dist/eusi-node.js",
   "scripts": {
