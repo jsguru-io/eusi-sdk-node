@@ -1,9 +1,9 @@
 
 
 # eusi-sdk-node
-The JS library which abstracts low level communication with **EUSI** delivery API is meant to be used within NodeJS environment.
+The JS library which abstracts low level communication with **[EUSI](https://eusi.io)** delivery API is meant to be used within NodeJS environment.
 
-> EUSI is API-first CMS that is user-friendly, beautifully
+> EUSI is an API-first CMS that is user-friendly, beautifully
 designed and easy to use.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
