@@ -40,9 +40,11 @@
     "lint-staged": "^6.1.1"
   },
   "dependencies": {
-    "eusi-sdk-core": "git+https://github.com/jsguru-io/eusi-sdk-core-js.git",
     "request": "^2.83.0",
     "request-promise": "^4.2.2"
+  },
+  "peerDependencies": {
+    "eusi-sdk-core": "^1.0.0"
   },
   "files": [
     "dist",

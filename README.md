@@ -8,7 +8,7 @@ designed and easy to use.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Installation
+## Table of content
 
 - [Installation](#installation)
 - [Simple usage](#simple-usage)
@@ -45,12 +45,14 @@ designed and easy to use.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## Installation
+*NOTE: **eus-sdk-node** package is peer dependent on **eusi-sdk-core** package
+so please make sure you have installed them both !*
 ```sh
-npm install --save eusi-sdk-node
+npm install --save eusi-sdk-core eusi-sdk-node
 ```
 or
 ```sh
-yarn add eusi-sdk-node
+yarn add eusi-sdk-core eusi-sdk-node
 ```
 
 ## Simple usage
