@@ -10,7 +10,7 @@ export default [
             file: pkg.main,
             name: 'eusiNode'
         },
-        external: Object.keys(pkg.dependencies),
+        external: Object.keys(Object.assign({}, pkg.dependencies, pkg.peerDependencies)),
         plugins: [
             babel({
                 exclude: ['node_modules/**']

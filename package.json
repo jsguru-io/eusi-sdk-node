@@ -6,7 +6,7 @@
     "url": "https://github.com/jsguru-io/eusi-sdk-node"
   },
   "description": "SDK for accessing EUSI delivery API using NodeJS",
-  "main": "dist/eusi-node.js",
+  "main": "dist/eusi-sdk-node.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sample": "nodemon samples/sample.js --exec babel-node --presets env",
