@@ -33,6 +33,7 @@ designed and easy to use.
   - [$lt](#lt)
   - [$gt](#gt)
   - [combining operators](#combining-operators)
+  - [Pagination](#pagination)
 - [Handling forms](#handling-forms)
   - [getForm](#getform)
   - [submitForm](#submitform)
@@ -161,7 +162,7 @@ Retrieves info of the currently logged in user
 ```js
 eusi.getUser({ token }).then(user => console.log(user));
 ```
-or if you have created *withTokenClient*
+or if you have created [*withTokenClient*](#wrapping-up-the-access-token)
 ```js
 withTokenClient.getUser().then(user => console.log(user));
 ```
@@ -272,6 +273,39 @@ eusi.getByField({
     // 'responsible-scientist' with the value 'Nikola Tesla' and
     // which have at the same time 'location' field with
     // the value 'New York'
+});
+```
+### Pagination
+We support pagination.
+In order to control the pagination you use two optional properties as part of a second object argument: **pageSize** and **pageNumber**. This signature is same for all content related API methods.
+```js
+eusi.getByName('Some content name', {
+  token,
+  pageSize: 20,
+  pageNumber: 1
+});
+
+eusi.get({
+  name: 'Some content name',
+  taxonomyName: 'some taxonomy name'
+}, {
+  token,
+  pageSize: 10,
+  pageNumber: 5
+});
+```
+or if you have created [withTokenClient](#wrapping-up-the-access-token)
+```js
+withTokenClient.getByType('blog', {
+  pageSize: 20,
+  pageNumber: 1
+});
+
+withTokenCient.get({
+  id: '82803b24-1ad5-11e8-accf-0ed5f89f718b'
+}, {
+  pageSize: 10,
+  pageNumber: 5
 });
 ```
 
