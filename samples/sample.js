@@ -11,7 +11,7 @@ const eusi = eusiNode({
 eusi.getAccess().then((response) => {
     const eusiClient = eusi(response.token);
     eusiClient.get({
-        type: 'blog'
+        model: 'blog'
     }).then(console.log);
 });
 
@@ -28,15 +28,15 @@ eusi
         const eusiClient = eusi(user.token);
         console.log(user);
 
-        eusiClient.getByType('blog').then(console.log);
+        eusiClient.getByModel('blog').then(console.log);
 
-        eusiClient.getByName('Content 1').then(console.log);
+        eusiClient.getByTitle('Content 1').then(console.log);
 
         eusiClient.getByTaxonomyPath('news.sport.tennis').then(console.log);
 
         eusiClient.get({
             taxonomyPath: 'news.sport.table-tennis',
-            type: 'News'
+            model: 'News'
         }).then(console.log);
 
         eusiClient.getByField({
@@ -52,7 +52,7 @@ eusi
 
 // passing token around for every endpoint call
 eusi.login('test@gmail.com', 'test').then(user => {
-    eusi.getByType('Template2', {
+    eusi.getByModel('Template2', {
         token: user.token
     }).then(console.log);
     eusi.getByName('Content 1', {
@@ -70,8 +70,8 @@ eusi.login('test@gmail.com', 'test').then(user => {
 // OR creating the instance once which will remember the passed token and expose the identical API
 eusi.login('test@gmail.com', 'test').then(user => {
     const eusiClient = eusi(user.token);
-    eusiClient.getByType('blog').then(console.log);
-    eusiClient.getByName('My first blog').then(console.log);
+    eusiClient.getByModel('blog').then(console.log);
+    eusiClient.getByTitle('My first blog').then(console.log);
     eusiClient.getByField({
         code: {
             $like: '%some xml code for example%'

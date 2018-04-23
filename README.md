@@ -6,11 +6,11 @@ The JS library which abstracts low level communication with **[EUSI](https://eus
 > EUSI is an API-first CMS that is user-friendly, beautifully
 designed and easy to use.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of content
 
 - [Installation](#installation)
+- [Independent bundle](#independent-bundle)
 - [Simple usage](#simple-usage)
 - [Configuration](#configuration)
 - [Authorization/Authentication](#authorizationauthentication)
@@ -19,13 +19,17 @@ designed and easy to use.
   - [getAccess](#getaccess)
   - [getUser](#getuser)
 - [Fetching content](#fetching-content)
+  - [by key](#by-key)
   - [by id](#by-id)
-  - [by content type (aka template name)](#by-content-type-aka-template-name)
+  - [by content model](#by-content-model)
+  - [by content type](#by-content-type)
+  - [by content title](#by-content-title)
   - [by content name](#by-content-name)
   - [by taxonomy id](#by-taxonomy-id)
   - [by taxonomy name](#by-taxonomy-name)
   - [by taxonomy path](#by-taxonomy-path)
   - [by field](#by-field)
+  - [Pagination](#pagination)
 - [Advanced querying](#advanced-querying)
   - [$like](#like)
   - [$between](#between)
@@ -33,7 +37,6 @@ designed and easy to use.
   - [$lt](#lt)
   - [$gt](#gt)
   - [combining operators](#combining-operators)
-  - [Pagination](#pagination)
 - [Handling forms](#handling-forms)
   - [getForm](#getform)
   - [submitForm](#submitform)
@@ -43,7 +46,7 @@ designed and easy to use.
 - [Wrapping up the access token](#wrapping-up-the-access-token)
 - [More examples](#more-examples)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Installation
 *NOTE: **eus-sdk-node** package is peer dependent on **eusi-sdk-core** package
 so please make sure you have installed them both !*
@@ -119,7 +122,7 @@ eusi.login({
   // or you can wrap the token up so you dont pass it every time you request something
   const withTokenClient = eusi(token);
   withTokenClient.getById('060c99b0-b2db-42ca-a94d-c4873c2bda90').then(console.log);
-  withTokenClient.getByName('Some content name').then(console.log);
+  withTokenClient.getByTitle('Some content title').then(console.log);
 }).catch(error => {
 	console.log('Login failed'};
 });
@@ -140,7 +143,7 @@ eusi.register({
 
   const withTokenClient = eusi(token);
   withTokenClient.getById('060c99b0-b2db-42ca-a94d-c4873c2bda90').then(console.log);
-  withTokenClient.getByName('Some content name').then(console.log);
+  withTokenClient.getByTitle('Some content title').then(console.log);
 }).catch(error => {
 	console.log('Registration failed'};
 });
@@ -171,13 +174,35 @@ withTokenClient.getUser().then(user => console.log(user));
 
 ## Fetching content
 
+### by key
+
+```js
+eusi.getByKey('First-blog234', { token ).then(console.log);
+```
+
 ### by id
 
 ``` js
 eusi.getById('44e8c09b-ed9e-4424-99e0-2de60adafa01', { token });
 ```
 
-### by content type (aka template name)
+### by content model
+
+``` js
+eusi.get({
+    model: 'blog'
+}, { token })
+    .then(console.log);
+```
+or
+
+``` js
+eusi.getByModel('blog', { token })
+    .then(console.log);
+```
+
+### ~~by content type~~
+**WARNING: This method is deprecated. Please use [getByModel](#by-content-model) instead**.
 
 ``` js
 eusi.get({
@@ -192,7 +217,21 @@ eusi.getByType('blog', { token })
     .then(console.log);
 ```
 
-### by content name
+### by content title
+
+``` js
+eusi.get({ title: 'Aussie open - first round'}, { token })
+	.then(console.log);
+```
+or
+``` js
+eusi.getByTitle('Aussie open - first round', { token })
+    .then(console.log);
+```
+
+
+### ~~by content name~~
+**WARNING: This method is deprecated. Please use [getByTitle](#by-content-title) instead.**
 
 ``` js
 eusi.get({ name: 'Aussie open - first round'}, { token })
@@ -281,14 +320,14 @@ eusi.getByField({
 We support pagination.
 In order to control the pagination you use two optional properties as part of a second object argument: **pageSize** and **pageNumber**. This signature is same for all content related API methods.
 ```js
-eusi.getByName('Some content name', {
+eusi.getByTitle('Some content title', {
   token,
   pageSize: 20,
   pageNumber: 1
 });
 
 eusi.get({
-  name: 'Some content name',
+  title: 'Some content title',
   taxonomyName: 'some taxonomy name'
 }, {
   token,
@@ -331,13 +370,13 @@ eusi.getByField({
 
 // You can combine queries with any number of quearible fields
 eusi.get({
-    name: {
+    title: {
         $like: 'Today%'
     },
     taxonomyPath: {
         $like: 'news.%'
     },
-}).then(.../ fetches all the content which name starts with 'Today' and which has any taxnomy which is a descendant of taxonomy 'news'
+}).then(.../ fetches all the content which title starts with 'Today' and which has any taxnomy which is a descendant of taxonomy 'news'
 ```
 *NOTE: When using $like operator there is no case sensitivity.*
 
@@ -353,9 +392,9 @@ eusi.getByField({
 ### $in
 Matches any of the supplied operands
 ``` js
-eusi.getByName({
+eusi.getByTitle({
   $in: ['Nikola Tesla', 'Mihajlo Pupin'] // // the value must be an array !
-}, { token }).then(console.log); // prints out all the content which has name equal to either 'Nikola Tesla' or 'Mihajlo Pupin'
+}, { token }).then(console.log); // prints out all the content which has title equal to either 'Nikola Tesla' or 'Mihajlo Pupin'
 ```
 ### $lt
 Matches all the number values lower then specified value
@@ -385,7 +424,7 @@ You can combine any number of fields with any number of existing operators to cr
 ***NOTE: nesting operators is not supported***
 ```js
 eusi.get({
-  name: {
+  title: {
     $like: '%tennis%',
   },
   taxonomyName: 'sport-news',
@@ -465,14 +504,14 @@ Instead of passing the access token every time you request something you can wra
 		const withTokenClient = eusi(response.toekn);
 		// now whenevery you request something by using 'withTokenClient' the token will be passed automatically
 		withTokenClient.get({
-			name: 'I just realized I dont need to pass the token every time'
+			title: 'I just realized I dont need to pass the token every time'
 		}).then(console.log);
 
-		withTokenClient.getByName({
+		withTokenClient.getByTitle({
 			$like: '%token time has passed%'
 		}).then(console.log);
 
-		withTokenClient.getByName('This feels good').then(console.log);
+		withTokenClient.getByTitle('This feels good').then(console.log);
 	});
 ```
 **NOTE: Only API methods which require access token are exposed on *withTokenClient* object**.
