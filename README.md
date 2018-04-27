@@ -177,7 +177,7 @@ withTokenClient.getUser().then(user => console.log(user));
 ### by key
 
 ```js
-eusi.getByKey('First-blog234', { token ).then(console.log);
+eusi.getByKey('First-blog234', { token } ).then(console.log);
 ```
 
 ### by id
