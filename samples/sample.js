@@ -1,12 +1,11 @@
-const eusiNode = require('eusi-sdk-node');
-
+const eusiNode = require('../dist/eusi-sdk-node');
 const eusi = eusiNode({
     deliveryApi: 'http://localhost:4301/api/v1', // this one is optional, default url will be set to target our cloud delivery API
     bucketKey: '46e5945b-789d-4cc2-8a40-608612425226',
     bucketSecret: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJidWNrZXRfaWQiOiI0NmU1OTQ1Yi03ODlkLTRjYzItOGE0MC02MDg2MTI0MjUyMjYiLCJpZCI6IjU0MjBjYjA2LTRmMGYtNDMzMy1hODJhLTc5ZmFjMzU5YTU2ZSIsInRpbWVzdGFtcCI6MTUxNjYxMDU5NDc1Mn0.Li8Sb8v1CJnANDctUQumAQo90puBtNA3ywh4MmnxP-M'
 });
 
-// for anonymous access
+//for anonymous access
 
 eusi.getAccess().then((response) => {
     const eusiClient = eusi(response.token);
@@ -15,8 +14,7 @@ eusi.getAccess().then((response) => {
     }).then(console.log);
 });
 
-
-// user registration
+//user registration
 eusi
     .register({
         email: 'test@gmail.com',
@@ -80,3 +78,18 @@ eusi.login('test@gmail.com', 'test').then(user => {
 }).catch(() => {
     console.error('wrong user name or password');
 });
+
+//validating integrity and authenticity of payment notification
+
+const notificationPayload = {
+    status: 'completed',
+    id: 'ca8af7ee-af9e-4168-bee1-8b5d13c77ba7'
+};
+
+console.log(eusiNode.isValidPaymentNotification(notificationPayload, {
+    bucketSecret: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJidWNrZXRfaWQiOiI0NmU1OTQ1Yi03ODlkLTRjYzItOGE0MC02MDg2MTI0MjUyMjYiLCJpZCI6IjU0MjBjYjA2LTRmMGYtNDMzMy1hODJhLTc5ZmFjMzU5YTU2ZSIsInRpbWVzdGFtcCI6MTUxNjYxMDU5NDc1Mn0.Li8Sb8v1CJnANDctUQumAQo90puBtNA3ywh4MmnxP-M',
+    payload: {
+        name: 'John'
+    }
+}));
+
