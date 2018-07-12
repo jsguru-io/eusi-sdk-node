@@ -30,9 +30,10 @@ designed and easy to use.
   - [by taxonomy path](#by-taxonomy-path)
   - [by field](#by-field)
   - [Pagination](#pagination)
-  - [Purchasing content](#purchasing-content)
-  	- [example](#example)
-  	- [parameters](#parameters)
+- [Purchasing content](#purchasing-content)
+  - [example](#example)
+  - [parameters](#parameters)
+  - [validating integrity and authenticity of notification](#validating-integrity-and-authenticity-of-notification)
 - [Advanced querying](#advanced-querying)
   - [$like](#like)
   - [$between](#between)
@@ -398,7 +399,28 @@ withTokenClient.purchaseContent(contentId, {
 - **description** - payment description which is going to be sent to your customer as part of a notification email
 - **notifyUrl** - the URL which is going to be POST requested with every status change of the payment
 
-For more details please check our official API documentation.
+### Validating integrity and authenticity of notification
+As stated above **notifyUrl** is going to be called with POST request with every payment change. To avoid security issues we recommend to always check the signature of the request before you consume it's payload. We will include **HMAC-SHA256** signature as part of the payload data. That way you can always be sure that the request is being made by us and it's integrity has not changed. The signature is being made by digesting complete notification request
+payload by using the first bucket secret key in your list as the signing key.
+The list of all bucket keys you can find under the bucket settings inside of our app.
+
+Here is the pseudo code which depicts how the signatre is being created.
+```
+signature = HMACSHA256(JSON.stringify(notificationRequest.data), firstBucketSecretInYourList)
+```
+
+#### Using our SDK
+We expose simple function on the root object of our sdk which will allow you to simply accomplish validating request signature.
+```js
+const eusiNode = require('eusi-sdk-node');
+
+eusiNode.isValidPaymentNotification(paymentNotificationRequest.hash, {
+  bucketSecret: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJidWNrZXRfaWQiOiI0NmU1OTQ1Yi03ODlkLTRjYzItOGE0MC02MDg2MTI0MjUyMjYiLCJpZCI6IjU0MjBjYjA2LTRmMGYtNDMzMy1hODJhLTc5ZmFjMzU5YTU2ZSIsInRpbWVzdGFtcCI6MTUxNjYxMDU5NDc1Mn0.Li8Sb8v1CJnANDctUQumAQo90puBtNA3ywh4MmnxP-M',
+  payload: paymentNotificationRequest.data
+});
+```
+
+For more details please check our official [API documentation](https://delivery.docs.eusi.io/).
 
 
 ## Advanced querying

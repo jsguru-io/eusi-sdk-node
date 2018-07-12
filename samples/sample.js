@@ -81,12 +81,9 @@ eusi.login('test@gmail.com', 'test').then(user => {
 
 //validating integrity and authenticity of payment notification
 
-const notificationPayload = {
-    status: 'completed',
-    id: 'ca8af7ee-af9e-4168-bee1-8b5d13c77ba7'
-};
+const receivedHash = 'fsdfsdfsde234234234234afsdfsdf242342';
 
-console.log(eusiNode.isValidPaymentNotification(notificationPayload, {
+console.log(eusiNode.isValidPaymentNotification(receivedHash, {
     bucketSecret: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJidWNrZXRfaWQiOiI0NmU1OTQ1Yi03ODlkLTRjYzItOGE0MC02MDg2MTI0MjUyMjYiLCJpZCI6IjU0MjBjYjA2LTRmMGYtNDMzMy1hODJhLTc5ZmFjMzU5YTU2ZSIsInRpbWVzdGFtcCI6MTUxNjYxMDU5NDc1Mn0.Li8Sb8v1CJnANDctUQumAQo90puBtNA3ywh4MmnxP-M',
     payload: {
         name: 'John'
