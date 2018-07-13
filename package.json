@@ -49,7 +49,7 @@
     "request-promise": "^4.2.2"
   },
   "peerDependencies": {
-    "eusi-sdk-core": "^1.0.0"
+    "eusi-sdk-core": "^1.2.0"
   },
   "files": [
     "dist",

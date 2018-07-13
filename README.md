@@ -30,7 +30,7 @@ designed and easy to use.
   - [by taxonomy path](#by-taxonomy-path)
   - [by field](#by-field)
   - [Pagination](#pagination)
-- [Purchasing content](#purchasing-content)
+- [Purchasing content](#purchasing-content-using-crypto-currencies)
   - [example](#example)
   - [parameters](#parameters)
   - [validating integrity and authenticity of notification](#validating-integrity-and-authenticity-of-notification)
